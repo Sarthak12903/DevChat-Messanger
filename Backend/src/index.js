@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://devchat-messanger-1.onrender.com",
     credentials: true,
   })
 );
@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
   });
 }
+
 server.listen(port, () => {
   console.log(`Server is runnning on ${port}`);
   connectDB();
