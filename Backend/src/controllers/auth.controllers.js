@@ -64,7 +64,17 @@ export const login = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: "Invalid Credential" });
     }
+
     const token = generateToken(user._id);
+
+    // ✅ Cookie options for cross-site
+    const options = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    };
+
     return res.status(200).cookie("token", token, options).json({
       _id: user._id,
       fullName: user.fullName,
@@ -76,6 +86,8 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
 export const logout = (req, res) => {
   try {
     res.cookie("token", "", { maxAge: 0 });
@@ -111,11 +123,3 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-export const checkAuth = async (req, res) => {
-  try {
-    res.status(200).json(req.user);
-  } catch (error) {
-    console.log(("Error in checkAuth controller ", error.message));
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};

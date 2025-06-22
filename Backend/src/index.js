@@ -10,6 +10,7 @@ import path from "path";
 dotenv.config();
 const port = process.env.PORT;
 const __dirname = path.resolve();
+app.set("trust proxy", 1); // <- important for secure cookies
 app.use(cookieParser());
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
