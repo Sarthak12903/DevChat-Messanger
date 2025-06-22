@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
 app.use(
   cors({
-    origin: "https://devchat-messanger-1.onrender.com",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -31,6 +31,10 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
   });
 }
+
+app.get("/", (req, res) => {
+  res.send("Welcome to DevChat API");
+});
 
 server.listen(port, () => {
   console.log(`Server is runnning on ${port}`);
